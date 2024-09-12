@@ -48,6 +48,8 @@ make requirements
 
 ## Usage
 
+paste your desired csv file at the root of this repository and run the script
+
 ### Running the Script
 
 You can use the `Makefile` to automate the process:

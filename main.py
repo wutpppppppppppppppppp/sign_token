@@ -5,13 +5,20 @@ def split_and_count(input_file, output_file):
     # Read the CSV file
     df = pd.read_csv(input_file)
     
+    # Ensure the column exists and handle NaN values
+    if 'บท (ย่อ)' not in df.columns:
+        raise ValueError("Column 'บท (ย่อ)' not found in the input file.")
+    
     # Split the 'บท (ย่อ)' column by '+' sign and handle NaN values
     df['split_words'] = df['บท (ย่อ)'].astype(str).fillna('').str.split('+').apply(
-        lambda x: [item.strip() for item in x]
+        lambda x: [item.strip() for item in x if item.strip() != '']
     )
     
     # Explode the lists into separate rows
     df_exploded = df.explode('split_words', ignore_index=True)
+    
+    # Drop any NaN or empty values in the exploded DataFrame
+    df_exploded = df_exploded[df_exploded['split_words'].notna() & (df_exploded['split_words'] != '')]
     
     # Count occurrences of each split word
     word_counts = df_exploded['split_words'].value_counts().to_dict()
