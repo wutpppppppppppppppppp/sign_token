@@ -4,7 +4,7 @@ OUTPUT_FILE="word_counts.csv"
 VENV_DIR=venv
 
 venv:
-	python -m venv $(VENV_DIR)
+	python3 -m venv $(VENV_DIR)
 
 install: venv
 	$(VENV_DIR)/bin/pip install -r requirements.txt
