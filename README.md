@@ -1,8 +1,12 @@
-# Project: Simple Script for splitting sign language
+Here’s the updated `README.md` to reflect the changes in your `Makefile` and script. This version explains that the script now uses interactive input and updates the relevant sections accordingly.
+
+---
+
+# Project: Split and Count Words
 
 ## Description
 
-This project processes a CSV file to split words from a specific column by a delimiter (`+`), counts the occurrences of each word, and saves the results to a new CSV file. It includes automation for setting up the environment, installing dependencies, and running the script.
+This project processes a CSV file to split words from a specific column by a delimiter (`+`), counts the occurrences of each word, and saves the results to a new CSV file. It includes automation for setting up the environment, installing dependencies, and running the script using `Makefile`.
 
 ## Features
 
@@ -21,21 +25,21 @@ This project processes a CSV file to split words from a specific column by a del
 ### 1. Clone the Repository
 
 ```bash
-git clone <repository-url>
-cd <repository-directory>
+git clone https://github.com/wutpppppppppppppppppp/sign_token.git
+cd https://github.com/wutpppppppppppppppppp/sign_token.git
 ```
 
 ### 2. Create and Activate a Virtual Environment
 
 ```bash
-python -m venv venv
+make venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 ```
 
 ### 3. Install Dependencies
 
 ```bash
-pip install -r requirements.txt
+make install
 ```
 
 ### 4. Create `requirements.txt`
@@ -62,11 +66,7 @@ You can use the `Makefile` to automate the process:
 
   - Create the virtual environment (if not already created).
   - Install dependencies.
-  - Run the script with the default input and output file names specified in the `Makefile`.
-
-- **Specify Custom Input and Output Files:**
-
-  Modify the `INPUT_FILE` and `OUTPUT_FILE` variables in the `Makefile`, or pass them as arguments if you adjust the `Makefile` to support it.
+  - Run the script, which will prompt you to enter the path to the input and output files.
 
 ### Manual Commands
 
@@ -87,8 +87,10 @@ If you prefer to run commands manually:
 - **Run the Script:**
 
   ```bash
-  python split_and_count.py -i "path/to/your_input_file.csv" -o "path/to/your_output_file.csv"
+  python split_and_count.py
   ```
+
+  - The script will prompt you for the input CSV file and output CSV file.
 
 - **Clean Up:**
 
@@ -100,22 +102,6 @@ If you prefer to run commands manually:
 
 - `venv`: Creates a virtual environment.
 - `install`: Installs dependencies.
-- `run`: Runs the script with the specified input and output files.
+- `run`: Runs the script with interactive input for file names.
 - `clean`: Removes the virtual environment and output files.
 - `requirements`: Generates or updates the `requirements.txt` file.
-
-## Contributing
-
-Feel free to contribute by submitting issues, suggestions, or pull requests. Ensure your code follows the project's style and includes appropriate tests.
-
-## License
-
-This project is licensed under the [MIT License](LICENSE).
-
-## Contact
-
-For any questions or issues, please contact [Your Name](your-email@example.com).
-
----
-
-Adjust the placeholders like `<repository-url>`, `<repository-directory>`, and `[Your Name](your-email@example.com)` as needed for your specific project details. Let me know if there are any additional details or sections you’d like to include!
