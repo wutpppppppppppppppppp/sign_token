@@ -1,8 +1,4 @@
-Here’s the updated `README.md` to reflect the changes in your `Makefile` and script. This version explains that the script now uses interactive input and updates the relevant sections accordingly.
-
----
-
-# Project: Split and Count Words
+# Project: sign lang token
 
 ## Description
 
