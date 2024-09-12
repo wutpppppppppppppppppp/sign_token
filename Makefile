@@ -10,7 +10,7 @@ install: venv
 	$(VENV_DIR)/bin/pip install -r requirements.txt
 
 run: install
-	$(VENV_DIR)/bin/python split_and_count.py
+	$(VENV_DIR)/bin/python main.py
 
 clean:
 	rm -rf $(VENV_DIR)
