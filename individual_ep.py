@@ -1,5 +1,5 @@
+import os
 import pandas as pd
-import argparse
 
 def split_and_count(input_file, output_file):
     # Read the CSV file
@@ -9,10 +9,15 @@ def split_and_count(input_file, output_file):
     if 'บท (ย่อ)' not in df.columns:
         raise ValueError("Column 'บท (ย่อ)' not found in the input file.")
     
-    # Split the 'บท (ย่อ)' column by '+' sign and handle NaN values
-    df['split_words'] = df['บท (ย่อ)'].astype(str).fillna('').str.split('+').apply(
-        lambda x: [item.strip() for item in x if item.strip() != '']
-    )
+    # Define a function to split based on '+' or spaces
+    def custom_split(text):
+        if '+' in text:
+            return [item.strip() for item in text.split('+') if item.strip() != '']
+        else:
+            return [item.strip() for item in text.split() if item.strip() != '']
+
+    # Split the 'บท (ย่อ)' column by '+' or spaces and handle NaN values
+    df['split_words'] = df['บท (ย่อ)'].astype(str).fillna('').apply(custom_split)
     
     # Explode the lists into separate rows
     df_exploded = df.explode('split_words', ignore_index=True)
@@ -39,12 +44,16 @@ def split_and_count(input_file, output_file):
     print(f"Word counts have been saved to '{output_file}'.")
 
 def main():
-    # Ask for user input
-    input_file = input("Enter the path to the input CSV file: ")
-    output_file = input("Enter the path for the output CSV file: ")
+    # Define input and output folders
+    input_folder = 'data'
+    output_folder = 'words'
     
-    # Call the function with the user-provided file names
-    split_and_count(input_file, output_file)
+    # Process all files in the 'data' folder
+    for file_name in os.listdir(input_folder):
+        if file_name.endswith('.csv'):
+            input_file = os.path.join(input_folder, file_name)
+            output_file = os.path.join(output_folder, f"word_counts_{file_name}")
+            split_and_count(input_file, output_file)
 
 if __name__ == '__main__':
     main()
