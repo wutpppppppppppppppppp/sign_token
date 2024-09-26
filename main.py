@@ -26,6 +26,13 @@ def split_and_count(input_file, output_file):
     # Convert the dictionary to a DataFrame for easier saving
     result_df = pd.DataFrame(list(word_counts.items()), columns=['Word', 'Count'])
     
+    # Calculate the total number of unique words
+    total_count = len(result_df)
+    
+    # Add a row for the total count
+    total_row = pd.DataFrame([['Total', total_count]], columns=['Word', 'Count'])
+    result_df = pd.concat([result_df, total_row], ignore_index=True)
+    
     # Save the result to a CSV file
     result_df.to_csv(output_file, index=False)
     
