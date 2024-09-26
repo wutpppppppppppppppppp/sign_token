@@ -9,8 +9,14 @@ def check_duplicates_in_csv(file_path, all_duplicates):
         print(f"Warning: 'Word' column not found in {file_path}. Skipping this file.")
         return None
 
-    # Check if words in the current file exist in the overall duplicates dictionary
-    df['Duplicated'] = df['Word'].apply(lambda word: all_duplicates.get(word, ''))
+    # Normalize words to lowercase for case-insensitive comparison
+    df['Normalized_Word'] = df['Word'].str.lower()
+
+    # Check if normalized words in the current file exist in the overall duplicates dictionary
+    df['Duplicated'] = df['Normalized_Word'].apply(lambda word: all_duplicates.get(word, ''))
+
+    # Drop the normalized column before saving
+    df.drop(columns=['Normalized_Word'], inplace=True)
 
     # Save the updated CSV file with the 'Duplicated' column
     df.to_csv(file_path, index=False)
@@ -35,12 +41,14 @@ def check_all_csv_files_in_directory(directory_path):
             print(f"Warning: 'Word' column not found in {file_path}. Skipping this file.")
             continue
         
-        # Collect each word and associate it with its file
+        # Normalize words to lowercase and associate them with their files
         for word in df['Word']:
             if pd.notna(word):  # Exclude NaN
-                word = word.strip()
+                word = word.strip().lower()  # Convert to lowercase for case-insensitivity
                 if word in all_words:
-                    all_words[word].append(file)
+                    # Ensure each file is listed only once for each word
+                    if file not in all_words[word]:
+                        all_words[word].append(file)
                 else:
                     all_words[word] = [file]
     
